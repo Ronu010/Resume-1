@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/ronu010/banking-ci-cd-project.git'
+      }
+    }
+
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build -t banking-api .'
+      }
+    }
+
+    stage('Run Container') {
+      steps {
+        sh 'docker run -d -p 3000:3000 banking-api'
+      }
+    }
+  }
+}
